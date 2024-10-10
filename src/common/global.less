@@ -1,0 +1,23 @@
+@import url(./reset.less);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+iframe {
+  ::-webkit-scrollbar {
+    background: transparent;
+    display: none; /* Chrome Safari */
+    width: 0 !important;
+    height: 0 !important;
+  }
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+:root {
+  --safe-area-inset-top: 44px;
+}
