@@ -1,6 +1,8 @@
 import React from "react";
+import ReactDOM from "react-dom/client";
 import Simulator from "./components/simulator";
 import Toolbar from "./components/toolbar";
+import "@/common/global.less"
 
 function App() {
   return (
@@ -11,4 +13,5 @@ function App() {
   );
 }
 
-export default App;
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);

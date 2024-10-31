@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
-import { OPERATE_CMD } from "../../../common/constant";
+import { OPERATE_CMD } from "../../../../common/constant";
 
 function Toolbar() {
   const triggerSimulatorChange = (cmd: OPERATE_CMD) => {
-    console.log("send message", cmd);
-    const iframe = document.getElementById(
-      "simulator-inner"
-    ) as HTMLIFrameElement;
+    // console.log("send message", cmd);
+    // const iframe = document.getElementById(
+    //   "simulator-inner"
+    // ) as HTMLIFrameElement;
 
-    iframe.contentWindow.postMessage({ cmd }, "*");
+    // iframe.contentWindow.postMessage({ cmd }, "*");
+    window.location.reload();
   };
 
   useEffect(() => {

@@ -5,7 +5,9 @@ import HomeIndicator from "./components/home-indicator";
 
 function Simulator() {
 
-  const { REQUEST_URL } = self;
+  const link = new URL(window.location.href).searchParams.get('link');
+
+  console.log(link);
 
   const onSubFrameLoad = () => {
     //  tell background it's ready to inject script
@@ -23,7 +25,7 @@ function Simulator() {
         <HomeIndicator />
       </div>
       <div className="w-[375px] h-[812px] overflow-hidden shrink-0">
-        <iframe onLoad={onSubFrameLoad} id="simulator-inner" className="w-full h-full p-0 m-0 border-none" src={REQUEST_URL}></iframe>
+        <iframe onLoad={onSubFrameLoad} id="simulator-inner" className="w-full h-full p-0 m-0 border-none" src={link}></iframe>
       </div>
     </div>
   );

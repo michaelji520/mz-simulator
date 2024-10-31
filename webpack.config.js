@@ -8,7 +8,16 @@ const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
 
 const isProd = process.env.NODE_ENV === "production";
 
-const plugins = [];
+const plugins = [
+  new HtmlWebpackPlugin({
+    template: path.resolve(__dirname, "./src/template/index.html"),
+    favicon: path.resolve(__dirname, "./src/assets/favicon.ico"),
+    filename: "index.html",
+    chunks: ["background", "content", "inner"],
+    filename: "simulator.html",
+    chunks: ["simulator"],
+  }),
+];
 
 if (isProd) {
   plugins.push(
@@ -36,12 +45,13 @@ module.exports = {
   entry: {
     background: path.resolve(__dirname, "./src/background.ts"),
     content: path.resolve(__dirname, "./src/content.tsx"),
-    inner: path.resolve(__dirname, "./src/inner.ts")
+    inner: path.resolve(__dirname, "./src/inner.ts"),
+    simulator: path.resolve(__dirname, "./src/pages/simulator/index.tsx"),
   },
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "chrome-extension://meccidlmcpadmigdgohnhaphndcpknal/",
+    publicPath: "/",
   },
   resolve: {
     alias: {

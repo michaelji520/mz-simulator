@@ -2,6 +2,7 @@ import { OPERATE_CMD } from "./common/constant";
 
 // 判断是否在iframe中
 if (self !== top) {
+  console.log('in iframe');
   addGlobalStyle();
   setStyleTagAnonymous();
   // 需要等标签替换生效后才能替换变量
@@ -11,6 +12,7 @@ if (self !== top) {
   initOperationListener();
 } else {
   // 不在iframe中，不执行任何逻辑
+  console.log('in parent');
 }
 
 function addGlobalStyle() {

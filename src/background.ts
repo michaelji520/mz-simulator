@@ -54,7 +54,14 @@ function onReloadPage(tabId: number, info: chrome.tabs.TabChangeInfo) {
 }
 
 /** 监听扩展图标点击事件 */
-chrome.action.onClicked.addListener((tab) => {
+chrome.action.onClicked.addListener(async (tab) => {
+  if (tab.id) {
+    console.log('execute jump', tab);
+    const link = tab.url;
+    await chrome.tabs.update({ url: chrome.runtime.getURL(`./simulator.html?link=${encodeURIComponent(link)}`)});
+    return;
+  }
+
   if (isUnderPreview) {
     isUnderPreview = false;
     activeTabId = undefined;
@@ -76,7 +83,7 @@ chrome.action.onClicked.addListener((tab) => {
 // wait for page's message to inject script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.injectable) {
-    console.log("start inject script");
+    console.log("start inject script", sender);
 
     chrome.scripting.executeScript(
       {
