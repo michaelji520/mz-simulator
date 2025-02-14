@@ -1,3 +1,7 @@
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+
 export function setUserAgent(tabId: number) {
   const rule: chrome.declarativeNetRequest.UpdateRuleOptions = {
     removeRuleIds: [1, 2],
@@ -69,3 +73,17 @@ export function removeUserAgent() {
 }
 
 export function setResourceAccessControl() {}
+
+export function getCurrentTab(callback: (tab: chrome.tabs.Tab) => void) {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  chrome.tabs.query(queryOptions, ([tab]) => {
+    if (chrome.runtime.lastError)
+    console.error(chrome.runtime.lastError);
+    // `tab` will either be a `tabs.Tab` instance or `undefined`.
+    callback(tab);
+  });
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}

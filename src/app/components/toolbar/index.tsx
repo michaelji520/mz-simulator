@@ -26,9 +26,7 @@ function Toolbar() {
   }, []);
   return (
     <div className="flex flex-col w-10">
-      <span onClick={() => triggerSimulatorChange(OPERATE_CMD.REFRESH)}>
-        刷新
-      </span>
+      <span onClick={() => triggerSimulatorChange(OPERATE_CMD.REFRESH)}>刷新页面</span>
     </div>
   );
 }

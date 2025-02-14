@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "lib": ["es2021", "dom"],
     "outDir": "./dist/",
     "noImplicitAny": true,

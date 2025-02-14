@@ -2,6 +2,7 @@ import { OPERATE_CMD } from "./common/constant";
 
 // 判断是否在iframe中
 if (self !== top) {
+  console.log(['running in iframe'])
   addGlobalStyle();
   setStyleTagAnonymous();
   // 需要等标签替换生效后才能替换变量
@@ -11,6 +12,7 @@ if (self !== top) {
   initOperationListener();
 } else {
   // 不在iframe中，不执行任何逻辑
+  console.log("not in iframe");
 }
 
 function addGlobalStyle() {
@@ -31,11 +33,11 @@ function setStyleTagAnonymous() {
 
   const cssLinks = links.filter((i) => i.rel.toLowerCase() === "stylesheet");
   const newCssLinks = cssLinks
-    .map((i) => {
+    ?.map((i) => {
       return `<link rel="stylesheet" type="text/css" href="${i.href}" crossorigin="anonymous">`;
     })
     .join("");
-  cssLinks.map((i) => document.head.removeChild(i));
+  cssLinks?.map((i) => document.head.removeChild(i));
   document.head.insertAdjacentHTML("beforeend", newCssLinks);
   console.log("css links", cssLinks, document.styleSheets);
 }
@@ -76,7 +78,7 @@ function replaceSafeAreaVariable() {
 
   console.log("selectors", selectors);
 
-  selectors.map((i) => {
+  selectors?.map((i) => {
     if (!i?.selectorText) {
       return;
     }
@@ -90,7 +92,7 @@ function replaceSafeAreaVariable() {
     );
 
     const newCssText = `${i.selectorText} { ${attrs
-      .map((i) => {
+      ?.map((i) => {
         i = i.trim();
         const keyAndVal = i.split(":");
         if (keyAndVal.length !== 2) {

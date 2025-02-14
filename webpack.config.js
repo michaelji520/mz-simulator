@@ -12,6 +12,14 @@ const plugins = [];
 
 if (isProd) {
   plugins.push(
+    new HtmlWebpackPlugin({
+      title: 'simulator',
+      filename: 'simulator.html',
+      template: path.resolve(__dirname, './src/index.html'),
+      // chunks: ['simulator'],
+      inject: true,
+      minify: { collapseWhitespace: true }
+    }),
     new CompressionWebpackPlugin({
       test: /\.js$|\.html$|\.css$/u,
       // compress if file is larger than 4kb
@@ -28,6 +36,7 @@ if (isProd) {
     }),
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
+
   );
 }
 
@@ -36,7 +45,7 @@ module.exports = {
   entry: {
     background: path.resolve(__dirname, "./src/background.ts"),
     content: path.resolve(__dirname, "./src/content.tsx"),
-    inner: path.resolve(__dirname, "./src/inner.ts")
+    inner: path.resolve(__dirname, "./src/inner.ts"),
   },
   output: {
     filename: "[name].js",
