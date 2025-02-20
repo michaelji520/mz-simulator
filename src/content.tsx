@@ -5,7 +5,7 @@ import App from "./app";
 
 /** 清除原网页所有样式，保留标题 */
 const root = document.documentElement;
-root.style.cssText = "font-size: 16px";
+root.style.cssText = "font-size: 16px !important";
 document.head.innerHTML = "<title>" + document.title + "</title>";
 root.getAttributeNames().map((i) => root.removeAttribute(i));
 

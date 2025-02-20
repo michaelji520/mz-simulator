@@ -1,4 +1,8 @@
-import { removeUserAgent, setUserAgent } from "./common/toolkit";
+import {
+  getSimulateDeviceInfo,
+  removeUserAgent,
+  setUserAgent,
+} from "./common/toolkit";
 
 const activePreviewList: number[] = [];
 
@@ -105,6 +109,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             sendResponse({ done: true });
           }
         );
+
+        getSimulateDeviceInfo().then((info) => {
+          const { safeArea } = info;
+          chrome.scripting.insertCSS(
+            {
+              target: {
+                tabId: sender.tab.id,
+                frameIds: targets.map((i) => i.frameId),
+              },
+              css: `:root { --safe-area-inset-top: ${
+                safeArea.top || 44
+              }px !important; --safe-area-inset-bottom: ${
+                safeArea.bottom || 34
+              }px;}`,
+            },
+            () => {
+              // finish inject
+              sendResponse({ done: true });
+            }
+          );
+        });
+
         return true; // required for async sendResponse()
       });
   }

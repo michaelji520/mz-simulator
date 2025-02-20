@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { OPERATE_CMD } from "../../../common/constant";
+import { Button } from "@/components/ui/button";
 
 function Toolbar() {
   const triggerSimulatorChange = (cmd: OPERATE_CMD) => {
@@ -25,8 +26,10 @@ function Toolbar() {
     };
   }, []);
   return (
-    <div className="flex flex-col w-10">
-      <span onClick={() => triggerSimulatorChange(OPERATE_CMD.REFRESH)}>刷新页面</span>
+    <div className="flex flex-col h-full justify-center">
+      <Button onClick={() => triggerSimulatorChange(OPERATE_CMD.REFRESH)}>
+        刷新页面
+      </Button>
     </div>
   );
 }

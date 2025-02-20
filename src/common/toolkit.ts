@@ -1,6 +1,4 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-
+import { deviceConfigList } from "@/app/components/simulator/constants";
 
 export function setUserAgent(tabId: number) {
   const rule: chrome.declarativeNetRequest.UpdateRuleOptions = {
@@ -77,13 +75,24 @@ export function setResourceAccessControl() {}
 export function getCurrentTab(callback: (tab: chrome.tabs.Tab) => void) {
   let queryOptions = { active: true, lastFocusedWindow: true };
   chrome.tabs.query(queryOptions, ([tab]) => {
-    if (chrome.runtime.lastError)
-    console.error(chrome.runtime.lastError);
+    if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
     // `tab` will either be a `tabs.Tab` instance or `undefined`.
     callback(tab);
   });
 }
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+export function setSimulateDeviceInfo(info: any) {
+  return chrome.storage.local.set({ SIMULATE_DEVICE_INFO: info });
+}
+
+/** 获取选中的设备信息 */
+export async function getSimulateDeviceInfo() {
+  let target = await chrome.storage.local.get("SIMULATE_DEVICE_INFO");
+  if (!target.SIMULATE_DEVICE_INFO) {
+    await setSimulateDeviceInfo(deviceConfigList[0]); // 初始化
+    target = await chrome.storage.local.get("SIMULATE_DEVICE_INFO");
+  }
+
+  console.log(target);
+  return target.SIMULATE_DEVICE_INFO;
 }

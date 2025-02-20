@@ -2,7 +2,7 @@ import { OPERATE_CMD } from "./common/constant";
 
 // 判断是否在iframe中
 if (self !== top) {
-  console.log(['running in iframe'])
+  console.log(["running in iframe"]);
   addGlobalStyle();
   setStyleTagAnonymous();
   // 需要等标签替换生效后才能替换变量
@@ -19,8 +19,8 @@ function addGlobalStyle() {
   const style = document.createElement("style");
   const hideScrollBar =
     "::-webkit-scrollbar {background: transparent; width: 0 !important; height: 0 !important;}";
-  const customSafeAreaVariable =
-    ":root { --safe-area-inset-top: 44px; --safe-area-inset-bottom: 34px;}";
+  const customSafeAreaVariable = "";
+  // ":root { --safe-area-inset-top: 59px; --safe-area-inset-bottom: 34px;}";
 
   style.textContent = hideScrollBar + customSafeAreaVariable;
 
@@ -29,7 +29,7 @@ function addGlobalStyle() {
 
 function setStyleTagAnonymous() {
   const links = Array.from(document.head.getElementsByTagName("link"));
-  console.log("head links", links);
+  // console.log("head links", links);
 
   const cssLinks = links.filter((i) => i.rel.toLowerCase() === "stylesheet");
   const newCssLinks = cssLinks
@@ -39,7 +39,7 @@ function setStyleTagAnonymous() {
     .join("");
   cssLinks?.map((i) => document.head.removeChild(i));
   document.head.insertAdjacentHTML("beforeend", newCssLinks);
-  console.log("css links", cssLinks, document.styleSheets);
+  // console.log("css links", cssLinks, document.styleSheets);
 }
 
 function appendCustomCSSText(cssText: string) {
