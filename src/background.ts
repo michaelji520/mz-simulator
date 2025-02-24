@@ -1,6 +1,7 @@
 import {
   getSimulateDeviceInfo,
   removeUserAgent,
+  setSimulateDeviceInfo,
   setUserAgent,
 } from "./common/toolkit";
 
@@ -19,8 +20,6 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
   setActionIcon(isUnderPreview(activeInfo.tabId));
 });
 
-// updateHeaderRule();
-
 function updateHeaderRule(tabId: number) {
   if (!tabId) return;
 
@@ -33,21 +32,24 @@ function updateHeaderRule(tabId: number) {
 
 /** inject script to main page */
 function injectScript(tab: chrome.tabs.Tab) {
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func: ({ url }) => {
-      // set iframe src through sub_frame's window object
-      self.REQUEST_URL = url;
-    },
-    args: [{ url: tab.url }],
-  });
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    files: ["content.js"],
-  });
-  chrome.scripting.insertCSS({
-    target: { tabId: tab.id },
-    files: ["content.css"],
+  getSimulateDeviceInfo().then((info) => {
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: ({ url, id }) => {
+        // set iframe src through sub_frame's window object
+        self.REQUEST_URL = url;
+        self.ACTIVE_DEVICE_ID = id;
+      },
+      args: [{ url: tab.url, id: info.id }],
+    });
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      files: ["content.js"],
+    });
+    chrome.scripting.insertCSS({
+      target: { tabId: tab.id },
+      files: ["content.css"],
+    });
   });
 }
 
@@ -133,6 +135,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
         return true; // required for async sendResponse()
       });
+  }
+
+  if (message.cmd === "DEVICE_CHANGE") {
+    const { device } = message;
+    console.log("change simulate device to:", device);
+
+    setSimulateDeviceInfo(device).then(async () => {
+      await chrome.tabs.reload(sender.tab.id);
+      sendResponse({ done: true });
+    });
   }
   // required for execute sendResponse()
   return true;

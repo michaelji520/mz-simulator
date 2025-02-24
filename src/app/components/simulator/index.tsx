@@ -1,18 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StatusBar from "./components/status-header";
-// import iPhoneCover from './device-img/iphone-11-pro-green.png';
-// import iPhoneCover from './device-img/iphone-15-black.png';
 import HomeIndicator from "./components/home-indicator";
 import { deviceConfigList } from "./constants/index";
 
-const selectedDeviceId = 2;
-const currentDevice = deviceConfigList.find(
-  (device) => device.id === selectedDeviceId
-);
-
 function Simulator() {
-  const { REQUEST_URL } = self;
-  const { width, height, cover } = currentDevice;
+  const { REQUEST_URL, ACTIVE_DEVICE_ID } = self;
+  const currentDevice = deviceConfigList.find(
+    (device) => device.id === ACTIVE_DEVICE_ID
+  );
+
+  const { width, height, cover, statusBarConfig } = currentDevice;
 
   const onSubFrameLoad = () => {
     //  tell background it's ready to inject script
@@ -24,7 +21,6 @@ function Simulator() {
       }
     });
   };
-  const { statusBarConfig } = currentDevice;
 
   return (
     <div
