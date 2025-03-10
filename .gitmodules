@@ -1,0 +1,3 @@
+[submodule "src/external-library/iphone-device-info"]
+	path = src/external-library/iphone-device-info
+	url = https://github.com/michaelji520/iphone-device-info

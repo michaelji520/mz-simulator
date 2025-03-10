@@ -1,5 +1,8 @@
 import iphone11ProGreen from "../device-img/iphone-11-pro-green.png";
 import iphone15Black from "../device-img/iphone-15-black.png";
+import iphone15ProMax from "../device-img/iphone-15-pro-max.png";
+
+import iphoneSeriesDeviceInfo from "@/external-library/iphone-device-info/src/index";
 
 export const deviceConfigList = [
   {
@@ -55,4 +58,32 @@ export const deviceConfigList = [
       height: 59,
     },
   },
+  {
+    id: 3,
+    name: "iPhone 15 Pro Max",
+    cover: iphone15ProMax,
+    width: 430,
+    height: 932,
+    coverAspect: 4212 / 8688,
+    coverWidth: 468,
+    offsetTop: 16,
+    offsetLeft: 19,
+    offsetRight: 23,
+    offsetBottom: 21,
+    safeArea: {
+      top: 59,
+      left: 0,
+      right: 0,
+      bottom: 34,
+    },
+    statusBarConfig: {
+      left: 40,
+      right: 32,
+      fontSize: 16,
+      iconHeight: 14,
+      height: 59,
+    },
+  },
 ];
+
+console.log("remote list", iphoneSeriesDeviceInfo);

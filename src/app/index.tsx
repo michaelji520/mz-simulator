@@ -48,6 +48,7 @@ function App() {
                 <SelectLabel>iOS设备</SelectLabel>
                 <SelectItem value="1">iPhone X</SelectItem>
                 <SelectItem value="2">iPhone 15</SelectItem>
+                <SelectItem value="3">iPhone 15 Pro Max</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
